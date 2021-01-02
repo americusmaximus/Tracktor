@@ -43,18 +43,13 @@ namespace Tracktor.CLI
 {
     public static class App
     {
-        //var cellularDistance = DistanceType.Euclidean;
-        //var cellularReturn = ReturnType.Minimum;
-
-
-
         static readonly Dictionary<string, string> Help = new Dictionary<string, string>()
         {
-            { "3d",               "A boolean flag indicating whether the 3D gneration mode\n                    is enabled. Default value is \"False\"." },
+            { "3d",               "A boolean flag indicating whether the 3D generation mode\n                    is enabled. Default value is \"False\"." },
             { "amptitude",        "A floating-point value of a warp fractal amptitude.\n                    Default value is \"30.0\"." },
             { "cellulardistance", "A cellular distance type for the \"Cellular\" noise\n                    generation. Possible values are \"Euclidean\",\n                    \"EuclideanSquared\", \"Hybrid\", and \"Manhattan\".\n                    Default value is \"Euclidean\"." },
             { "cellularjitter",   "A floating-point value of a cellular jitter for the\n                    \"Cellular\" noise generation. Default value is \"1.0\"." },
-            { "cellularreturn",   "A cellulart distance return type for the \"Cellular\" noise\n                    generation. Possible values are \"Decrease\", \"Increase\",\n                    \"Maximum\", \"Minimum\", \"Product\", \"Quotient\", and \"Value\".\n                    Default value is \"Minimum\"." },
+            { "cellularreturn",   "A cellular distance return type for the \"Cellular\" noise\n                    generation. Possible values are \"Decrease\", \"Increase\",\n                    \"Maximum\", \"Minimum\", \"Product\", \"Quotient\", and \"Value\".\n                    Default value is \"Minimum\"." },
             { "fractal" ,         "A fractal generation type. Possible values are \"None\",\n                    \"FractionalBrownianMotion\", \"PingPong\", and \"Ridged\".\n                    Default value is \"None\"." },
             { "frequency",        "A floating-point value of the noise generation frequency.\n                    Default value is \"0.02\"." },
             { "gain",             "A floating-point value of a fractal gain.\n                    Default value is \"0.5\"." },
@@ -63,16 +58,16 @@ namespace Tracktor.CLI
             { "lacunarity",       "A floating-point value of a fractal lacunarity.\n                    Default value is \"2.0\"." },
             { "mode",             "A mode of Tracktor execution. Mode is a required parameter.\n                    Possible values are \"Noise\", and \"Warp\".\n                    \"Noise\" mode allows the user to generate a noise image with\n                    provided parameters, while \"Warp\" mode allows to generate\n                    a warp image."},
             { "noise",            "A noise generation type. Possible values are \"Cellular\",\n                    \"Perlin\", \"Simplex\", \"SimplexSmooth\", \"Value\", and\n                    \"CubicValue\". Default value is \"Perlin\"." },
-            { "octaves",          "A non-negative integer value specifiying a number of\n                    octaves for the fractal generation. Default value is \"5\"." },
-            { "output",           "A path to the output image file. Possible values for the\n                    image file extension are BMP, EMF, EXIF, GIF, ICO, JPEG,\n                    PNG, TIFF, and WMF."},
+            { "octaves",          "A non-negative integer value specifying a number of\n                    octaves for the fractal generation. Default value is \"5\"." },
+            { "output",           "A path to the output image file. Possible values for the\n                    image file extension are BMP, EMF, EXIF, GIF, ICO, JPEG,\n                    PNG, TIF, and WMF."},
             { "pingpongstrength", "A floating point value of a Ping Pong strength for the\n                    \"PingPong\" fractal. Default value is \"2.0\"." },
-            { "rotation",         "A type of coordinate rotation in the 3d mode. Possible\n                    values are \"None\", \"ImproveXYPlanes\", \"ImproveXZPlanes\",\n                    and \"Simplex\". Default value is \"None\"." },
+            { "rotation",         "A type of coordinate rotation in the 3D mode. Possible\n                    values are \"None\", \"ImproveXYPlanes\", \"ImproveXZPlanes\",\n                    and \"Simplex\". Default value is \"None\"." },
             { "seed",             "An integer value of noise generation seed value.\n                    Default value is \"1337\"." },
             { "strength",         "A floating-point value of a fractal strength.\n                    Default value is \"0\" (zero)." },
             { "warp",             "A warp type. Possible values are \"None\", \"BasicGrid\",\n                    \"Radial\", \"Simplex\", and \"SimplexReduced\".\n                    Default value is \"None\"." },
             { "warpfractal",      "A warp fractal type. Possible values are \"None\",\n                    \"Independent\", and \"Progressive\". Default value is \"None\"." },
             { "width",            "A positive integer value of output image width specified in\n                    pixels. Default value is \"1024\"." },
-            { "z",                "A floating-point value for the z coordinate during the 3D\n                    generation mode. Default valoe is \"0\" (zero)." },
+            { "z",                "A floating-point value for the z coordinate during the 3D\n                    generation mode. Default valee is \"0\" (zero)." },
         };
 
         public static string GetHelpString(string parameter)
@@ -590,22 +585,22 @@ namespace Tracktor.CLI
                             new NoiseRequest(width, height,
                                 GetNoiseFractal(fractal, gain, lacunarity, octaves, strength, pingPongStrength, noise, seed, frequency, rotation, cellularDistance, cellularJitter, cellularReturn),
                                 GetWarpFractal(warpFractal, gain, lacunarity, octaves, warp, seed, amptitude, frequency, rotation))
-                        {
-                            Is3D = is3D,
-                            IsInverted = isInverted,
-                            Z = z
-                        });
+                            {
+                                Is3D = is3D,
+                                IsInverted = isInverted,
+                                Z = z
+                            }, output);
                     }
                 case AppMode.Warp:
                     {
                         return Warp(width, height,
                             new WarpRequest(width, height,
                                 GetWarpFractal(warpFractal, gain, lacunarity, octaves, warp, seed, amptitude, frequency, rotation))
-                        {
-                            Is3D = is3D,
-                            IsInverted = isInverted,
-                            Z = z
-                        });
+                            {
+                                Is3D = is3D,
+                                IsInverted = isInverted,
+                                Z = z
+                            }, output);
                     }
             }
 
@@ -617,7 +612,19 @@ namespace Tracktor.CLI
             return string.IsNullOrWhiteSpace(Path.GetDirectoryName(fileName)) ? Path.Combine(Environment.CurrentDirectory, fileName) : fileName;
         }
 
-        private static Image GenerateImage(int width, int height, ARGB[] colors)
+        public static bool TryParseImageFormat(string format, out ImageFormat imageFormat)
+        {
+            var extension = format.ToLowerInvariant().Replace("ico", "icon").Replace("jpg", "jpeg").Replace("tif", "tiff");
+
+            var imageFormatProperty = typeof(ImageFormat).GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty)
+                                                            .FirstOrDefault(p => p.Name.ToLowerInvariant() == extension);
+
+            imageFormat = imageFormatProperty == default ? default : (ImageFormat)imageFormatProperty.GetValue(default, default);
+
+            return imageFormat != default;
+        }
+
+        public static Image GenerateImage(int width, int height, ARGB[] colors)
         {
             var result = new Bitmap(width, height, PixelFormat.Format32bppArgb);
 
@@ -632,7 +639,7 @@ namespace Tracktor.CLI
             return result;
         }
 
-        private static IDistanceCalculator GetCellularDistance(DistanceType distanceType, float jitter, ReturnType returnType)
+        public static IDistanceCalculator GetCellularDistance(DistanceType distanceType, float jitter, ReturnType returnType)
         {
             var converter = GetCellularDistanceConverter(returnType);
 
@@ -659,7 +666,7 @@ namespace Tracktor.CLI
             return new NoneDistanceCalculator(converter, jitter);
         }
 
-        private static IDistanceConverter GetCellularDistanceConverter(ReturnType returnType)
+        public static IDistanceConverter GetCellularDistanceConverter(ReturnType returnType)
         {
             switch (returnType)
             {
@@ -696,7 +703,7 @@ namespace Tracktor.CLI
             return new NoneDistanceConverter();
         }
 
-        private static IConverter GetConverter(RotationType type)
+        public static IConverter GetConverter(RotationType type)
         {
             switch (type)
             {
@@ -717,7 +724,7 @@ namespace Tracktor.CLI
             return new NoneConverter();
         }
 
-        private static INoise GetNoise(NoiseType noiseType, int seed, float frequency, RotationType rotationType, DistanceType distanceType, float jitter, ReturnType returnType)
+        public static INoise GetNoise(NoiseType noiseType, int seed, float frequency, RotationType rotationType, DistanceType distanceType, float jitter, ReturnType returnType)
         {
             var converter = GetConverter(rotationType);
 
@@ -780,7 +787,7 @@ namespace Tracktor.CLI
             };
         }
 
-        private static INoiseFractal GetNoiseFractal(FractalType fractalType, float gain, float lacunarity, int octaves, float strength, float pingPongStrength, NoiseType noiseType, int seed, float frequency, RotationType rotationType, DistanceType distanceType, float jitter, ReturnType returnType)
+        public static INoiseFractal GetNoiseFractal(FractalType fractalType, float gain, float lacunarity, int octaves, float strength, float pingPongStrength, NoiseType noiseType, int seed, float frequency, RotationType rotationType, DistanceType distanceType, float jitter, ReturnType returnType)
         {
             var noise = GetNoise(noiseType, seed, frequency, rotationType, distanceType, jitter, returnType);
 
@@ -829,7 +836,7 @@ namespace Tracktor.CLI
             };
         }
 
-        private static IWarp GetWarp(WarpType warpType, int seed, float amptitude, float frequency, RotationType rotationType)
+        public static IWarp GetWarp(WarpType warpType, int seed, float amptitude, float frequency, RotationType rotationType)
         {
             var converter = GetConverter(rotationType);
 
@@ -881,7 +888,7 @@ namespace Tracktor.CLI
             };
         }
 
-        private static IWarpFractal GetWarpFractal(WarpFractalType warpFractalType, float gain, float lacunarity, int octaves, WarpType warpType, int seed, float amptitude, float frequency, RotationType rotationType)
+        public static IWarpFractal GetWarpFractal(WarpFractalType warpFractalType, float gain, float lacunarity, int octaves, WarpType warpType, int seed, float amptitude, float frequency, RotationType rotationType)
         {
             var warp = GetWarp(warpType, seed, amptitude, frequency, rotationType);
 
@@ -915,14 +922,26 @@ namespace Tracktor.CLI
             };
         }
 
-        private static int Noise(int width, int height, NoiseRequest noiseRequest)
+        public static int Noise(int width, int height, NoiseRequest noiseRequest, string output)
         {
             try
             {
-                GenerateImage(width, height, new Tracktor().Noise(noiseRequest).Image);
+                var extension = Path.GetExtension(output).ToLowerInvariant().Replace(".", string.Empty);
+
+                if (!TryParseImageFormat(extension, out var imageFormatValue))
+                {
+                    Console.WriteLine(string.Format("Image extension <{0}> is not supported. Saving image as a BMP.", extension));
+                }
+
+                var outputFileName = imageFormatValue != default ? output : (output + ".bmp");
+
+                GenerateImage(width, height, new Tracktor().Noise(noiseRequest).Image).Save(output, imageFormatValue ?? ImageFormat.Bmp);
+
+                Console.WriteLine(string.Format("Image saved as <{0}>.", outputFileName));
             }
             catch (Exception ex)
             {
+                Console.WriteLine(string.Format("Unable to save image as <{0}>. Please see the error below.", output));
                 Console.WriteLine(ex.ToString());
 
                 return -1;
@@ -931,14 +950,26 @@ namespace Tracktor.CLI
             return 0;
         }
 
-        private static int Warp(int width, int height, WarpRequest warpRequest)
+        public static int Warp(int width, int height, WarpRequest warpRequest, string output)
         {
             try
             {
-                GenerateImage(width, height, new Tracktor().Warp(warpRequest).Image);
+                var extension = Path.GetExtension(output).ToLowerInvariant().Replace(".", string.Empty);
+
+                if (!TryParseImageFormat(extension, out var imageFormatValue))
+                {
+                    Console.WriteLine(string.Format("Image extension <{0}> is not supported. Saving image as a BMP.", extension));
+                }
+
+                var outputFileName = imageFormatValue != default ? output : (output + ".bmp");
+
+                GenerateImage(width, height, new Tracktor().Warp(warpRequest).Image).Save(output, imageFormatValue ?? ImageFormat.Bmp);
+
+                Console.WriteLine(string.Format("Image saved as <{0}>.", outputFileName));
             }
             catch (Exception ex)
             {
+                Console.WriteLine(string.Format("Unable to save image as <{0}>. Please see the error below.", output));
                 Console.WriteLine(ex.ToString());
 
                 return -1;
