@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+namespace Tracktor.Noise.Cellular
+{
+    public class Distance : IDistance
+    {
+        public int Hash { get; set; }
+
+        public float Maximum { get; set; }
+
+        public float Minimum { get; set; }
+    }
+}

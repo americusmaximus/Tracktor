@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,32 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+
+namespace Tracktor
+{
+    public class AbstractRequest
+    {
+        public AbstractRequest(int width, int height)
+        {
+            if (width <= 0) { throw new ArgumentException("Width has to be a positive number."); }
+            if (height <= 0) { throw new ArgumentException("Height has to be a positive number."); }
+
+            Width = width;
+            Height = height;
+        }
+
+        public virtual int Height { get; protected set; }
+
+        public virtual bool Is3D { get; set; }
+
+        public virtual bool IsInverted { get; set; }
+
+        public virtual int Width { get; protected set; }
+
+        public virtual float Z { get; set; }
+    }
+}

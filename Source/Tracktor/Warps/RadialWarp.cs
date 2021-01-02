@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+using Tracktor.Converters;
+
+namespace Tracktor.Warps
+{
+    public class RadialWarp : AbstractWarp
+    {
+        public RadialWarp(IConverter converter) : base(converter) { }
+
+        protected override XY GetValue(int seed, float amptitude, float frequency, XY xy)
+        {
+            return xy ?? throw new ArgumentNullException(nameof(xy));
+        }
+
+        protected override XYZ GetValue(int seed, float amptitude, float frequency, XYZ xyz)
+        {
+            return xyz ?? throw new ArgumentNullException(nameof(xyz));
+        }
+    }
+}

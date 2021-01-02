@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,23 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+
+namespace Tracktor.Converters
+{
+    public class AbstractConverter : IConverter
+    {
+        public virtual XY Convert(XY xy)
+        {
+            return xy ?? throw new ArgumentNullException(nameof(xy));
+        }
+
+        public virtual XYZ Convert(XYZ xyz)
+        {
+            return xyz ?? throw new ArgumentNullException(nameof(xyz));
+        }
+    }
+}

@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,36 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+using Tracktor.Converters;
+using Tracktor.Noise.Cellular;
+
+namespace Tracktor.Noise
+{
+    public class CellularNoise : AbstractNoise
+    {
+        public CellularNoise(IDistanceCalculator calculator, IConverter converter) : base(converter)
+        {
+            Calculator = calculator ?? throw new ArgumentNullException(nameof(calculator));
+        }
+
+        public IDistanceCalculator Calculator { get; protected set; }
+
+        protected override float GetValue(int seed, XY xy)
+        {
+            if (xy == default) { throw new ArgumentNullException(nameof(xy)); }
+
+            return Calculator.Get(seed, xy);
+        }
+
+        protected override float GetValue(int seed, XYZ xyz)
+        {
+            if (xyz == default) { throw new ArgumentNullException(nameof(xyz)); }
+
+            return Calculator.Get(seed, xyz);
+        }
+    }
+}

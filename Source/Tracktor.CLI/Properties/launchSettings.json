@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Tracktor.CLI": {
+      "commandName": "Project"
+    }
+  }
+}

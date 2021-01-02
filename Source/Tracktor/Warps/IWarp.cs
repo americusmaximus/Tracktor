@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,29 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+namespace Tracktor.Warps
+{
+    public interface IWarp
+    {
+        float Amptitude { get; }
+
+        float Frequency { get; }
+
+        int Seed { get; }
+
+        XY Get(float amptitude, float frequency, XY xy);
+
+        XY Get(int seed, float amptitude, float frequency, XY xy);
+
+        XY Get(XY xy);
+
+        XYZ Get(float amptitude, float frequency, XYZ xyz);
+
+        XYZ Get(int seed, float amptitude, float frequency, XYZ xyz);
+
+        XYZ Get(XYZ xyz);
+    }
+}

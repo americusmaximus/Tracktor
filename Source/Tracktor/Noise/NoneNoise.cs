@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,44 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+using Tracktor.Converters;
+
+namespace Tracktor.Noise
+{
+    public class NoneNoise : AbstractNoise
+    {
+        public NoneNoise(IConverter converter) : base(converter) { }
+
+        protected override float GetValue(int seed, XY xy)
+        {
+            if (xy == default) { throw new ArgumentNullException(nameof(xy)); }
+
+            var result = Math.Abs(seed.GetHashCode() ^ xy.X.GetHashCode() ^ xy.Y.GetHashCode());
+
+            while (result > 1)
+            {
+                result /= seed;
+            }
+
+            return result;
+        }
+
+        protected override float GetValue(int seed, XYZ xyz)
+        {
+            if (xyz == default) { throw new ArgumentNullException(nameof(xyz)); }
+
+            var result = Math.Abs(seed.GetHashCode() ^ xyz.X.GetHashCode() ^ xyz.Y.GetHashCode() ^ xyz.Z.GetHashCode());
+
+            while (result > 1)
+            {
+                result /= seed;
+            }
+
+            return result;
+        }
+    }
+}

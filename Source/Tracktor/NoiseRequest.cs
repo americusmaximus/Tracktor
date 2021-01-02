@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,25 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+using Tracktor.Noise;
+using Tracktor.Warps;
+
+namespace Tracktor
+{
+    public class NoiseRequest : AbstractRequest
+    {
+        public NoiseRequest(int width, int height, INoiseFractal noise, IWarpFractal warp) : base(width, height)
+        {
+            Noise = noise ?? throw new ArgumentNullException(nameof(noise));
+            Warp = warp ?? throw new ArgumentNullException(nameof(warp));
+        }
+
+        public virtual INoiseFractal Noise { get; protected set; }
+
+        public virtual IWarpFractal Warp { get; protected set; }
+    }
+}

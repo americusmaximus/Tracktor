@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,35 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+
+namespace Tracktor.Warps
+{
+    public class BasicWarpFractal : AbstractWarpFractal
+    {
+        public BasicWarpFractal(IWarp warp) : base(warp) { }
+
+        protected override XY GetValue(XY xy)
+        {
+            if (xy == default) { throw new ArgumentNullException(nameof(xy)); }
+
+            var amp = Bounding * Warp.Amptitude;
+            var frequency = Warp.Frequency;
+
+            return Warp.Get(amp, frequency, xy);
+        }
+
+        protected override XYZ GetValue(XYZ xyz)
+        {
+            if (xyz == default) { throw new ArgumentNullException(nameof(xyz)); }
+
+            var amp = Bounding * Warp.Amptitude;
+            var frequency = Warp.Frequency;
+
+            return Warp.Get(amp, frequency, xyz);
+        }
+    }
+}

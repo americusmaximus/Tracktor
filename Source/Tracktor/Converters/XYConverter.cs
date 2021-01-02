@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+
+namespace Tracktor.Converters
+{
+    public class XYConverter : AbstractConverter
+    {
+        public override XYZ Convert(XYZ xyz)
+        {
+            if (xyz == default) { throw new ArgumentNullException(nameof(xyz)); }
+
+            var xy = xyz.X + xyz.Y;
+            var s2 = xy * -0.211324865405187f;
+
+            var result = new XYZ();
+
+            result.Z = xyz.Z * 0.577350269189626f;
+            result.X = xyz.X + s2 - result.Z;
+            result.Y = xyz.Y + s2 - result.Z;
+            result.Z += xy * 0.577350269189626f;
+
+            return result;
+        }
+    }
+}

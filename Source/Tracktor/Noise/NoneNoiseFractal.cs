@@ -1,3 +1,5 @@
+﻿#region License
+/*
 MIT License
 
 Copyright (c) 2020, 2021 Americus Maximus
@@ -19,3 +21,29 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+#endregion
+
+using System;
+
+namespace Tracktor.Noise
+{
+    public class NoneNoiseFractal : AbstractNoiseFractal
+    {
+        public NoneNoiseFractal(INoise noise) : base(noise) { }
+
+        protected override float GetValue(XYZ xyz)
+        {
+            if (xyz == default) { throw new ArgumentNullException(nameof(xyz)); }
+
+            return Noise.Get(xyz);
+        }
+
+        protected override float GetValue(XY xy)
+        {
+            if (xy == default) { throw new ArgumentNullException(nameof(xy)); }
+
+            return Noise.Get(xy);
+        }
+    }
+}
